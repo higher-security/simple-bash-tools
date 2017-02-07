@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# SYNOPSIS
+#
+# alarm-computer HH:MM  - Hibernate until tomorrow at HH:MM
+#
+# EXAMPLE
+#
+# alarm-computer 06:50
+#
+# REMARK
+#
+# Requires ALSA
+
+# Maximum Volume
+
+for i in Master Speaker
+do
+    amixer set $i unmute
+    amixer set $i 100
+done
+
+rtcwake -m mem --date $(date -d "tomorrow ${@:-8:40}" +"%F %T") > /dev/null 2>&1 
+speaker-test -t sine -f 1000 > /dev/null 2>&1 & 
+read USER_INPUT
+pkill speaker-test > /dev/null 2>&1  
