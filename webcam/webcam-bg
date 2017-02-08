@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# SYNOPSIS
+#
+# webcam-bg [ <filename> ] 
+#
+# DESCRIPTION
+#
+# Create a background encrypted webcam capture
+
+echo -n "Encryption password: "
+read -s PASSWORD
+nohup bash "ffmpeg -f alsa -ac 2 -i plughw:0,0 -f video4linux2 -s vga -i /dev/video0 -f ogg - | openssl enc -k $PASSWORD -aes-256-cbc -out ${@:-/var/log/webcam_$(date +%d-%m-%Y_%H:%M:%S).ogg.aes-256-cbc" >/dev/null 2>&1 &

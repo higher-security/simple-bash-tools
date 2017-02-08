@@ -1,0 +1,5 @@
+#!/bin/bash
+#
+# Lock screen from GUI. Valid for recent debian
+
+dbus-send --type=method_call --dest=org.gnome.ScreenSaver /org/gnome/ScreenSaver org.gnome.ScreenSaver.Lock

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# USAGE: umute <volume percentage>
+
+for i in Master Speaker Headphone
+do
+amixer set $i unmute
+amixer set $i ${@:-100}
+done

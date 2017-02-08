@@ -10,9 +10,7 @@
 #
 # REMARK
 #
-# Requires ALSA
-
-# Maximum Volume
+# ALSA should be installed
 
 for i in Master Speaker
 do
@@ -20,7 +18,7 @@ do
     amixer set $i 100
 done
 
-rtcwake -m mem --date $(date -d "tomorrow ${@:-8:40}" +"%F %T") > /dev/null 2>&1 
+rtcwake -m mem --date $(date -d "tomorrow ${@:-6:50}" +"%F %T") > /dev/null 2>&1 
 speaker-test -t sine -f 1000 > /dev/null 2>&1 & 
 read USER_INPUT
 pkill speaker-test > /dev/null 2>&1  

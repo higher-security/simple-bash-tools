@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# SYNOPSIS
+#
+# webcam-fg <filename>
+#
+# OVERVIEW
+#   
+# webcam-fg - Display webcam and generate an encrypted webcam capture. 
+#
+# Run "pkill ffplay" to stop webcam with background capture.
+
+FILE=${@:-/var/log/webcam-$(date +%d-%m-%Y_%H:%M:%S).aes-256-cbc}
+
+echo -n "Enter encryption password: "
+read -s PASSWORD
+
+nohup bash -c "ffmpeg -f alsa -ac 2 -i plughw:0,0 -f video4linux2 -s vga -i /dev/video0 -f ogg - | tee >(ffplay -i - || cat > /dev/null) >(openssl enc -k $PASSWORD -aes-256-cbc -out $FILE || cat >/dev/null )  > /dev/null" >/dev/null 2>&1 &
+PASSWORD=""
